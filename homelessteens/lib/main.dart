@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homelessteens/donationspage.dart';
 import 'package:homelessteens/heartpage.dart';
+import 'package:homelessteens/homepage.dart';
+import 'package:homelessteens/resumepage.dart';
 import 'widgets.dart';
 
 void main() {
@@ -50,19 +53,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
   PageController d = PageController();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  // void _incrementCounter() {
+  //   setState(() {
+  //     // This call to setState tells the Flutter framework that something has
+  //     // changed in this State, which causes it to rerun the build method below
+  //     // so that the display can reflect the updated values. If we changed
+  //     // _counter without calling setState(), then the build method would not be
+  //     // called again, and so nothing would appear to happen.
+  //     _counter++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        // child: Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -96,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          // mainAxisAlignment: MainAxisAlignment.center,
+          child: 
             // const Text(
             //   'You have pushed the button this many times:',
             // ),
@@ -105,20 +108,53 @@ class _MyHomePageState extends State<MyHomePage> {
             //   '$_counter',
             //   style: Theme.of(context).textTheme.headlineMedium,
             // ),
-            PageView(
-              controller: d,
+            Stack(
               children: [
-                Heartpage()
+                PageView(
+                  controller: d,
+                  children: const <Widget> [
+                    Heartpage(color: Colors.blue,),
+                    Homepage(color: Colors.red),
+                    Resumepage(color: Colors.purple),
+                    DonationsPage(color: Colors.green)
+                  ]
+                )
               ],
-            ),
-          ],
-        ),
+            )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: "Heart"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "Home"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.portrait),
+          label: "Resume"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.monetization_on_rounded),
+          label: "Donations"
+        ),
+      ],
+      unselectedItemColor: Colors.amber,
+      selectedItemColor: Colors.blue,
+      onTap: (index) {
+        setState(() {
+          _selectedIndex = index;
+          d.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+        });
+      },
+      currentIndex: _selectedIndex,
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
