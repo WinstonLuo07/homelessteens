@@ -3,11 +3,13 @@ import 'package:homelessteens/donationspage.dart';
 import 'package:homelessteens/heartpage.dart';
 import 'package:homelessteens/homepage.dart';
 import 'package:homelessteens/resumepage.dart';
+import 'package:homelessteens/util.dart';
 import 'widgets.dart';
 
-ThemeData theme = ThemeData(
-  primarySwatch: Colors.pink,
-  primaryColor: Colors.red
+final ThemeData theme = ThemeData(
+  primaryColor: fromHexcode("#493b7a"),
+  backgroundColor: fromHexcode("#E5D9F4"),
+  unselectedWidgetColor: Colors.black
 );
 
 void main() {
@@ -71,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: theme.primaryColor,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
@@ -107,10 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 PageView(
                   controller: d,
                   children: const <Widget> [
-                    Heartpage(color: Colors.blue,),
-                    Homepage(color: Colors.red),
-                    Resumepage(color: Colors.purple),
-                    DonationsPage(color: Colors.green)
+                    Heartpage(),
+                    Homepage(),
+                    Resumepage(),
+                    DonationsPage()
                   ]
                 )
               ],
@@ -133,9 +136,11 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(Icons.monetization_on_rounded),
           label: "Donations"
         ),
+        
       ],
-      unselectedItemColor: Colors.amber,
-      selectedItemColor: Colors.blue,
+      unselectedItemColor: theme.unselectedWidgetColor,
+      selectedItemColor: Colors.green,
+      backgroundColor: Colors.amber,
       onTap: (index) {
         setState(() {
           _selectedIndex = index;
