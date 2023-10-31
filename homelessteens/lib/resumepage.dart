@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'main.dart';
  
 class Resumepage extends StatefulWidget {
-  const Resumepage({Key? key, required this.color}) : super(key: key);
- 
-  final Color color;
+  const Resumepage({Key? key}) : super(key: key);
+
  
   @override
   _ResumepageState createState() => _ResumepageState();
@@ -25,10 +26,10 @@ class _ResumepageState extends State<Resumepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.color,
+      backgroundColor: theme.backgroundColor,
       appBar: AppBar(
        
-        backgroundColor: widget.color,
+        backgroundColor: theme.backgroundColor,
       ),
       body: Column(
         children: <Widget>[
