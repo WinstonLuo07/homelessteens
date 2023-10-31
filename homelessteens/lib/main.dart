@@ -9,7 +9,14 @@ import 'widgets.dart';
 final ThemeData theme = ThemeData(
   primaryColor: fromHexcode("#493b7a"),
   backgroundColor: fromHexcode("#E5D9F4"),
-  unselectedWidgetColor: Colors.black
+  canvasColor: fromHexcode("493b7a")
+);
+TextStyle REGULAR = TextStyle(
+  color: Colors.white,
+
+);
+TextStyle TITLE = TextStyle(
+  color: Colors.white,
 );
 
 void main() {
@@ -49,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   PageController d = PageController(initialPage: 1);
 
   // void _incrementCounter() {
@@ -72,12 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: theme.primaryColor,
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(widget.title),
-      // ),
+    
+      appBar: AppBar(
+        backgroundColor: theme.primaryColor,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("StreetsUp"),
+      ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -123,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
-          label: "Heart"
+          label: "Social"
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -137,11 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: Icon(Icons.monetization_on_rounded),
           label: "Donations"
         ),
-        
       ],
-      unselectedItemColor: theme.unselectedWidgetColor,
-      selectedItemColor: Colors.green,
-      backgroundColor: theme.backgroundColor,
       onTap: (index) {
         setState(() {
           _selectedIndex = index;
