@@ -4,15 +4,20 @@ import 'package:homelessteens/heartpage.dart';
 import 'package:homelessteens/homepage.dart';
 import 'package:homelessteens/resumepage.dart';
 import 'package:homelessteens/util.dart';
-import 'widgets.dart';
 
 final ThemeData theme = ThemeData(
-  primaryColor: fromHexcode("#493b7a"),
+  primaryColor: fromHexcode("#743F9D"),
+  accentColor: fromHexcode("#5757AD"),
   backgroundColor: fromHexcode("#E5D9F4"),
-  canvasColor: fromHexcode("493b7a")
+  canvasColor: fromHexcode("493b7a"),
+  errorColor: Colors.red[300],
 );
 TextStyle REGULAR = TextStyle(
   color: Colors.white,
+
+);
+TextStyle REGULARBLACK = TextStyle(
+  color: Colors.black,
 
 );
 TextStyle TITLE = TextStyle(
@@ -57,6 +62,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 1;
+  bool accountPage = false;
   PageController d = PageController(initialPage: 1);
 
   // void _incrementCounter() {
@@ -84,36 +90,25 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: theme.primaryColor,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text("StreetsUp"),
+        title: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  accountPage = !accountPage;
+                });
+              },
+              icon: Icon(Icons.person)
+            ),
+            Text("StreetsUp"),
+          ],
+        ),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        // child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          // mainAxisAlignment: MainAxisAlignment.center,
           child: 
-            // const Text(
-            //   'You have pushed the button this many times:',
-            // ),
-            // Text(
-            //   '$_counter',
-            //   style: Theme.of(context).textTheme.headlineMedium,
-            // ),
-            Stack(
+            accountPage ?
+            Scaffold()
+            : Stack(
               children: [
                 PageView(
                   physics: NeverScrollableScrollPhysics() ,
@@ -128,21 +123,23 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             )
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: theme.primaryColor,
+        items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
+          icon: Icon(Icons.favorite,size: 50),
           label: "Social"
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home,size: 50),
           label: "Home"
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.portrait),
+          icon: Icon(Icons.portrait,size: 50),
           label: "Resume"
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.monetization_on_rounded),
+          icon: Icon(Icons.monetization_on_rounded,size: 50,),
           label: "Donations"
         ),
       ],
@@ -154,11 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       currentIndex: _selectedIndex,
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

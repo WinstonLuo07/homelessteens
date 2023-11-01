@@ -16,42 +16,94 @@ class _DonationsPageState extends State<DonationsPage> {
   String paymentInfo = "Payment: "; // Replace with user's payment info
   double donationAmount = 0.0; // Variable to store the donation amount
   String recipientInfo = ""; // Variable to store recipient's information
-  List<String> receivedDonations = ["10 from Jeff Bezos", "25 from TheAnonymousHelper"]; // Replace with actual received donations
+
+  double wallet = 20.23;
+
+  List<String> receivedDonations = ["\$10.20 from Jeff Bezos", "\$10.03 from TheAnonymousHelper"]; // Replace with actual received donations
   @override
   Widget build(BuildContext context) {
+
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.blue;
+    }
+
     return Scaffold(
       backgroundColor: theme.backgroundColor,
-      appBar: AppBar(
-        title: Text("Donation Page"),
-        backgroundColor: theme.backgroundColor,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.account_circle), // User icon symbol
-            onPressed: () {
-              // Add code to handle the user icon click
-              showUserInformation();
-            },
+      // appBar: AppBar(
+      //   // title: Text("Donation Page"),
+      //   backgroundColor: theme.backgroundColor,
+      //   actions: <Widget>[
+      //     IconButton(
+      //       icon: Icon(Icons.account_circle), // User icon symbol
+      //       onPressed: () {
+      //         // Add code to handle the user icon click
+      //         showUserInformation();
+      //       },
+      //     ),
+      //   ],
+      // ),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/donation_page.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(color: theme.primaryColorLight, borderRadius: BorderRadius.circular(10)),
+                    child: Text("\$ $wallet", style: TextStyle(fontSize: 80, color: Colors.white),),
+                  ),
+                ),
+                const SizedBox(
+                  height: 220
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(250, 75),
+                    backgroundColor: theme.primaryColor
+                  ),
+                  onPressed: () {
+                    showSendDonationsDialog();
+                  },
+                  child: Text("Send Donation"),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(250, 75),
+                    backgroundColor: theme.primaryColor
+                  ),
+                  onPressed: () {
+                    showReceivedDonations();
+                  },
+                  child: Text("Received Donations"),
+                ),
+              ],
+            ),
           ),
         ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                showSendDonationsDialog();
-              },
-              child: Text("Send Donations"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showReceivedDonations();
-              },
-              child: Text("Received Donations"),
-            ),
-          ],
-        ),
       ),
     );
  }
@@ -94,7 +146,7 @@ class _DonationsPageState extends State<DonationsPage> {
               ),
               TextField(
                 controller: recipientController,
-                decoration: InputDecoration(labelText: "Recipient's Information"),
+                decoration: InputDecoration(labelText: "Recipient's Username"),
               ),
             ],
           ),
@@ -104,6 +156,22 @@ class _DonationsPageState extends State<DonationsPage> {
                 setState(() {
                   donationAmount = double.tryParse(amountController.text) ?? 0.0;
                   recipientInfo = recipientController.text;
+
+                  if (wallet - donationAmount >= 0) {
+                    wallet -= donationAmount;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
+                      Text("\$$donationAmount sent to $recipientInfo"),
+                      backgroundColor: theme.primaryColor,
+                      ),
+                      );
+                  }
+                  else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
+                      Text("Insufficient funds"),
+                      backgroundColor: theme.errorColor,
+                      ),
+                      );
+                  }
                 });
                 Navigator.of(context).pop();
               },

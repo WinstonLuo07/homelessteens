@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'dart:math';
 
 import 'main.dart';
@@ -25,51 +26,91 @@ class _ResumepageState extends State<Resumepage> {
  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      appBar: AppBar(
-       
-        backgroundColor: theme.backgroundColor,
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              itemCount: resumeTips.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Icon(Icons.lightbulb),
-                  title: Text(resumeTips[index]),
-                );
-              },
-            ),
+    return Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/resume_scaffold.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  // Add code to navigate to your resume guides page
-                },
-                child: Text("Resume Guides"),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(buttonColor),
+          Column(
+              children: <Widget>[
+                Expanded(
+                  child: SizedBox(
+                    child: ListView.builder(
+                      itemCount: resumeTips.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: Icon(color: Colors.white, Icons.lightbulb),
+                          title: Text(resumeTips[index], style: TextStyle(color: Colors.white)),
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(width: 16),
-              ElevatedButton(
-                onPressed: () {
-                  // Add code to navigate to the resume submission page
-                },
-                child: Text("Submit Resume"),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(buttonColor),
-                ),
-              ),
             ],
           ),
+          Align(
+            child: Column(
+              children: [
+                SizedBox(
+                  height:400
+                ),
+                ElevatedButton(
+                        style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all<Size>(
+                            Size(
+                              250, 70
+                            )
+                          ),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                              side: BorderSide(color: theme.accentColor)
+                            )
+                          )
+                        ),
+                        onPressed: () {
+                          
+                        },
+                        child: Text("Resume Templates"),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all<Size>(
+                            Size(
+                              250, 70
+                            )
+                          ),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                              side: BorderSide(color: theme.accentColor)
+                            )
+                          )
+                        ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
+                              Text("Resume mailed to Jobs!"),
+                              backgroundColor: theme.primaryColor,
+                              ),
+                    );
+                  },
+                  child: Text("Submit Resume"),
+                ),
+              ],
+            ),
+          ),
         ],
-      ),
     );
   }
 }

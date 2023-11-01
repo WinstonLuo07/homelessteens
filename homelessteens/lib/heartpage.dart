@@ -28,48 +28,104 @@ class _HeartpageState extends State<Heartpage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController textEditingController = TextEditingController();
-
-
     return Scaffold(
       backgroundColor: theme.backgroundColor,
-      body: Column(
-      children: [
-        DropdownMenu(
-            dropdownMenuEntries: [
-              DropdownMenuEntry(value: Text("Suicide Hotline: 988", style: REGULAR,), label: "Suicide Hotline: 988"),
-              DropdownMenuEntry(value: Text("1-800-273-TALK", style: REGULAR,), label: "1-800-273-TALK"),
-              DropdownMenuEntry(value: Text("police non emergency : 206-296-3111", style: REGULAR,), label: "police non emergency : 206-296-3111"),
-              DropdownMenuEntry(value: Text("Sexual Assault resource center : 1-888-99-VOICE", style: REGULAR,), label: "Sexual Assault resource center : 1-888-99-VOICE"),
-            ],
-            onSelected: (value) {
-              setState(() {
-                
-              });
-            },
-        ),
-        SizedBox(
-          height: 500,
-          child: ListView(
-            children: posts
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/heart_scaffold.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
           ),
-        ),
-        TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Send a message',
+          Column(
+          children: [
+            DropdownMenu(
+                dropdownMenuEntries: [
+                  DropdownMenuEntry(value: Text("Suicide Hotline: 988", style: REGULARBLACK,), label: "Suicide Hotline: 988"),
+                  DropdownMenuEntry(value: Text("1-800-273-TALK", style: REGULARBLACK,), label: "1-800-273-TALK"),
+                  DropdownMenuEntry(value: Text("police non emergency : 206-296-3111", style: REGULARBLACK,), label: "police non emergency : 206-296-3111"),
+                  DropdownMenuEntry(value: Text("Sexual Assault resource center : 1-888-99-VOICE", style: REGULARBLACK,), label: "Sexual Assault resource center : 1-888-99-VOICE"),
+                ],
+                onSelected: (value) {
+                  setState(() {
+                    
+                  });
+                },
             ),
-            controller: textEditingController,
-            onSubmitted: (String inputText) {
-              setState(() {
-                posts.add(
-                  MediaPost(name: "hello", message: inputText)
-                );
-                textEditingController.clear();
-              }); 
-            }
-        )
-      ],
+            SizedBox(
+              height: 500,
+              child: ListView(
+                children: posts
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: theme.backgroundColor,
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                        expands: false,
+                        decoration: InputDecoration(
+                          // border: OutlineInputBorder(),
+                          hintText: 'Send a message',
+                        ),
+                        controller: textEditingController,
+                        onSubmitted: (String inputText) {
+                          
+                          if (inputText == "") {
+                            // print("NAOFNAOF");
+                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
+                            //   Text("Please enter in a message"),
+                            //   backgroundColor: theme.errorColor,
+                            //   ),
+                            //   );
+                            return;
+                          }
+                          setState(() {
+                            posts.add(
+                              MediaPost(name: "Arindam Sanyal", message: inputText)
+                            );
+                            textEditingController.clear();
+                          }); 
+                        }
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (textEditingController.text == "") {
+                            // print("NAOFNAOF");
+                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
+                            //   Text("Please enter in a message"),
+                            //   backgroundColor: theme.errorColor,
+                            //   ),
+                            //   );
+                            return;
+                          }
+                      setState(() {
+                          posts.add(
+                            MediaPost(name: "hello", message: textEditingController.text)
+                          );
+                          textEditingController.clear();
+                      });
+                    }, 
+                  icon: Icon(Icons.send))
+                ],
+              ),
+            )
+          ],
     ),
+        ],
+      ),
     );
   }
 }
@@ -78,28 +134,62 @@ MediaPost({ Key? key , required this.name, required this.message}) : super(key: 
 
   String name = "";
   String message = "";
+  
+  final Map<String,Color> pfpIDs = {
+    "Shaan Kalgonkar": Colors.blue[100]!,
+    "John Michaelson": Colors.green[100]!,
+    "Frederick Dingleberry": Colors.pink[100]!
+  };
 
   @override
   Widget build(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: theme.primaryColor,
-            border: Border.all(color: theme.primaryColor),
-            borderRadius: BorderRadius.circular(50)
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: 325
+            ),
+            decoration: BoxDecoration(
+              color: theme.backgroundColor,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("${name} * ${TimeOfDay.now().hourOfPeriod}:${TimeOfDay.now().minute} ${TimeOfDay.now().hour <= 12 ? "AM" : "PM"}", 
+                    style: TextStyle(
+                      color: Colors.black
+                    )),
+                  ],
+                ),
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: pfpIDs[name],
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(90),
+                        // border: Border.all(color: pfpIDs[name]!)
+                      ),
+                      child: Icon(Icons.person, color: Colors.white, size: 50)),
+                    SizedBox(height: 20, width: 20,),
+                    Flexible(
+                      child: Text(message, 
+                      style: TextStyle(
+                      color: Colors.black
+                    )),)
+                  ],
+                ),
+              ],
+            ),
           ),
-          child: Row(
-            children: [
-              Icon(Icons.person, color: Colors.white,),
-              Text("${name}:", style: REGULAR),
-              SizedBox(height: 20, width: 20,),
-              Flexible(child: Text(message, style: REGULAR)),
-            ],
-          ),
-        ),
-        SizedBox(height: 10)
-      ],
+          SizedBox(height: 10)
+        ],
+      ),
     );
   }
 }
