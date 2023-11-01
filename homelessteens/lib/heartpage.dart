@@ -9,8 +9,27 @@ class Heartpage extends StatefulWidget {
 }
 
 class _HeartpageState extends State<Heartpage> {
+
+  List<MediaPost> posts = <MediaPost> [
+                  MediaPost(
+                  name: "Shaan Kalgonkar", message: "Hey, how's everybody doing? Anybody need a place tonight?",
+                  ),
+                  MediaPost(
+                  name: "John Michaelson", message: "Life sucks right now... I would really appreciate it",
+                  ),
+                  MediaPost(
+                  name: "Frederick Dingleberry", message: "Dont worry my friend. Everything is going to be okay.",
+                  ),
+                  MediaPost(
+                  name: "John Michaelson", message: "Thanks Frederick, lets meet up.",
+                  ),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingController = TextEditingController();
+
+
     return Scaffold(
       backgroundColor: theme.backgroundColor,
       body: Column(
@@ -31,28 +50,23 @@ class _HeartpageState extends State<Heartpage> {
         SizedBox(
           height: 500,
           child: ListView(
-                  children: [ 
-                    MediaPost(
-                    name: "Shaan Kalgonkar", message: "Hey, how's everybody doing? Anybody need a place tonight?",
-                    ),
-                    MediaPost(
-                    name: "John Michaelson", message: "Life sucks right now... I would really appreciate it",
-                    ),
-                    MediaPost(
-                    name: "Frederick Dingleberry", message: "Dont worry my friend. Everything is going to be okay.",
-                    ),
-                    MediaPost(
-                    name: "John Michaelson", message: "Thanks Frederick, lets meet up.",
-                    ),
-                  ]
+            children: posts
           ),
         ),
-        const TextField(
+        TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Send a message',
             ),
-            onSubmitted: ,
+            controller: textEditingController,
+            onSubmitted: (String inputText) {
+              setState(() {
+                posts.add(
+                  MediaPost(name: "hello", message: inputText)
+                );
+                textEditingController.clear();
+              }); 
+            }
         )
       ],
     ),
