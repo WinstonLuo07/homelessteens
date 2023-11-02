@@ -30,9 +30,9 @@ class _DonationsPageState extends State<DonationsPage> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
+        return Colors.indigo;
       }
-      return Colors.blue;
+      return Colors.indigo;
     }
 
     return Scaffold(

@@ -47,10 +47,10 @@ class _HeartpageState extends State<Heartpage> {
           children: [
             DropdownMenu(
                 dropdownMenuEntries: [
-                  DropdownMenuEntry(value: Text("Suicide Hotline: 988", style: REGULARBLACK,), label: "Suicide Hotline: 988"),
-                  DropdownMenuEntry(value: Text("1-800-273-TALK", style: REGULARBLACK,), label: "1-800-273-TALK"),
-                  DropdownMenuEntry(value: Text("police non emergency : 206-296-3111", style: REGULARBLACK,), label: "police non emergency : 206-296-3111"),
-                  DropdownMenuEntry(value: Text("Sexual Assault resource center : 1-888-99-VOICE", style: REGULARBLACK,), label: "Sexual Assault resource center : 1-888-99-VOICE"),
+                  DropdownMenuEntry(value: Text("Suicide Hotline: 988", style: REGULAR,), label: "Suicide Hotline: 988"),
+                  DropdownMenuEntry(value: Text("1-800-273-TALK", style: REGULAR,), label: "1-800-273-TALK"),
+                  DropdownMenuEntry(value: Text("police non emergency : 206-296-3111", style: REGULAR,), label: "police non emergency : 206-296-3111"),
+                  DropdownMenuEntry(value: Text("Sexual Assault resource center : 1-888-99-VOICE", style: REGULAR,), label: "Sexual Assault resource center : 1-888-99-VOICE"),
                 ],
                 onSelected: (value) {
                   setState(() {
@@ -66,7 +66,7 @@ class _HeartpageState extends State<Heartpage> {
             ),
             DecoratedBox(
               decoration: BoxDecoration(
-                color: theme.backgroundColor,
+                color: Colors.white,
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(10)
               ),
@@ -193,3 +193,4 @@ MediaPost({ Key? key , required this.name, required this.message}) : super(key: 
     );
   }
 }
+
