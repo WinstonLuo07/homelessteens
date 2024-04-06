@@ -72,7 +72,7 @@ class _ResumepageState extends State<Resumepage> {
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(color: theme.accentColor)
+                              side: BorderSide(color: theme.primaryColorLight)
                             )
                           )
                         ),
@@ -94,7 +94,7 @@ class _ResumepageState extends State<Resumepage> {
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(color: theme.accentColor)
+                              side: BorderSide(color: theme.primaryColorLight)
                             )
                           )
                         ),

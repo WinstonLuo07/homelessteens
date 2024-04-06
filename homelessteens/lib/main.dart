@@ -7,7 +7,7 @@ import 'package:homelessteens/util.dart';
 
 final ThemeData theme = ThemeData(
   primaryColor: fromHexcode("#743F9D"),
-  accentColor: fromHexcode("#5757AD"),
+  primaryColorLight: fromHexcode("#5757AD"),
   backgroundColor: fromHexcode("#E5D9F4"),
   canvasColor: fromHexcode("493b7a"),
   errorColor: Colors.red[300],
