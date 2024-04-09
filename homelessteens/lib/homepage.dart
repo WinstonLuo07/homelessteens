@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   Set<Marker> markers = {};
 
   late LatLng mousepos = _initialCameraPosition;
+  late Offset relmousepos;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -69,11 +70,13 @@ class _HomePageState extends State<HomePage> {
 
     return marker;
   }
-  /// Callback when mouse clicked on `Listener` wrapped widget.
-  Future<void> _onPointerDown(PointerDownEvent event) async {
-    // Check if right mouse button clicked
-    if ((event.kind == PointerDeviceKind.touch) &&
-        event.buttons == kPrimaryButton) {
+  void _onLongPress(PointerDownEvent details) {
+    setState(() {
+      relmousepos = details.position;
+    });
+  }
+
+  Future<void> dropDownOnLongPress() async {
       final overlay =
           Overlay.of(context).context.findRenderObject() as RenderBox;
       
@@ -87,22 +90,15 @@ class _HomePageState extends State<HomePage> {
           useRootNavigator: true,
           elevation: 8,
           position: RelativeRect.fromSize(
-              event.position & Size(48.0, 48.0), overlay.size));
+              relmousepos & Size(48.0, 48.0), overlay.size));
       // Check if menu item clicked
       switch (menuItem) {
         case 1:
-          // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          //   content: Text('Copy clicked'),
-          //   behavior: SnackBarBehavior.floating,
-          // ));
           setState(() {
           _addSafeSpaceMarker(mousepos.toString(), mousepos, Markerstate.foodbank);
           });
           break;
         case 2:
-          // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          //     content: Text('Cut clicked'),
-          //     behavior: SnackBarBehavior.floating));
           setState(() {
           _addSafeSpaceMarker(mousepos.toString(), mousepos, Markerstate.home);
           });
@@ -114,8 +110,6 @@ class _HomePageState extends State<HomePage> {
           
           break;
         default:
-      }
-
       }
     }
   
@@ -156,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                   _currentPosition != null ?  
                     Listener(
-                      onPointerDown:  _onPointerDown,
+                      onPointerDown: _onLongPress,
                       child: GoogleMap(
                       initialCameraPosition: CameraPosition(
                         // target: _initialCameraPosition,
@@ -169,10 +163,12 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                       markers: markers,
-                      onTap: (presslocation) {
+                      onLongPress: (presslocation) {
+                        print(presslocation);
                         if (presslocation.latitude == 0 && presslocation.longitude == 0) return;
                         setState(() {
                           mousepos = presslocation;
+                          dropDownOnLongPress();
                         });
                       },
                     )) : Center(child: const Text("Loading...")),
